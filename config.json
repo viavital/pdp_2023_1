@@ -1,0 +1,10 @@
+{
+  "usersFolderTree": {
+    "baseContentFolder": "./users-content",
+    "usersFolders": {
+      "bills": "bills",
+      "listSubscribers": "list-subscribers",
+      "imapConfig": "imap-config"
+    }
+  }
+}

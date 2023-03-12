@@ -1,28 +1,17 @@
-import { Inject, Injectable } from "@nestjs/common";
+import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 import { Repository } from "typeorm";
 import { User } from "./entity/user.entity";
 import { UserDTO } from "./entity/userDTO";
+import * as bcrypt from "bcrypt";
 
 export type Userlocal = any;
 
 @Injectable()
 export class UsersService {
+
   constructor(@Inject("USER_REPOSITORY")
               private usersRepository: Repository<User>) {
   }
-
-  private readonly users = [
-    {
-      userId: 1,
-      username: "john",
-      password: "changeme"
-    },
-    {
-      userId: 2,
-      username: "maria",
-      password: "guess"
-    }
-  ];
 
   async findAll() {
     const results = await this.usersRepository.find();
@@ -34,12 +23,26 @@ export class UsersService {
   }
 
   async findOne(username: string): Promise<Userlocal | undefined> {
-    return this.users.find((user) => user.username === username);
+    return this.usersRepository.findOneBy({ username: username });
   }
 
   async createUser(user: UserDTO) {
+    if (await this._checkIsUserExist(user)) {
+      return new BadRequestException({ message: "such user is exist" });
+    }
+    user.password = await this._hashUserPassword(user.password);
     const userPrepared = this.usersRepository.create(user);
     const savedUser = await this.usersRepository.save(userPrepared);
-    return savedUser;
+    return { id: savedUser.id, user: savedUser.username };
+  }
+
+  private async _checkIsUserExist(user: UserDTO): Promise<boolean> {
+    const seekedUser = await this.usersRepository.findOneBy({ username: user.username });
+    return Boolean(seekedUser);
+  }
+
+  private async _hashUserPassword(password: string) {
+    const salt = await bcrypt.genSalt();
+    return await bcrypt.hash(password, salt);
   }
 }

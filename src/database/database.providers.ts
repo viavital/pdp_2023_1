@@ -5,16 +5,12 @@ export const databaseProviders = [
     provide: 'DATA_SOURCE',
     useFactory: async () => {
       const dataSource = new DataSource({
-        type: 'mysql',
-        host: 'localhost',
-        port: 3306,
-        username: 'user',
-        password: 'password',
-        database: 'users',
+        type: 'sqlite',
+        database: 'db/users.db',
         entities: [
           __dirname + '/../**/*.entity{.ts,.js}',
         ],
-        synchronize: true,
+        synchronize: false,
       });
 
       return dataSource.initialize();
