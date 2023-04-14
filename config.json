@@ -6,5 +6,9 @@
       "listSubscribers": "list-subscribers",
       "imapConfig": "imap-config"
     }
+  },
+  "defaultMailTemplate": {
+    "topic": "Ваш рахунок від ОСББ",
+    "text": "Подивіться приєднаний файл, будь ласка."
   }
 }

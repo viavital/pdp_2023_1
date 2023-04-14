@@ -1,5 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { UsersFolderTree } from "./types/UsersFolderTree";
+import { MailTemplate } from "./types/MailTemplate";
 
 @Injectable()
 export class ConfigurationRecord {
@@ -7,5 +8,9 @@ export class ConfigurationRecord {
   }
   public getUsersFolders(): UsersFolderTree {
     return this.configuration.usersFolderTree;
+  }
+
+  public getDefaultMailTemplate(): MailTemplate {
+    return this.configuration.defaultMailTemplate;
   }
 }

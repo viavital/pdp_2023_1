@@ -1,6 +1,6 @@
 import { UsersContentService } from "./users-content-service";
 import { access, constants } from "node:fs";
-import { ConfigurationRecord } from "../configuration/configuration.record";
+import { ConfigurationRecord } from "../../configuration/configuration.record";
 import * as fs from 'fs'
 
 describe("test UsersContentService", () => {

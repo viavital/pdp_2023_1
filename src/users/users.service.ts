@@ -28,7 +28,7 @@ export class UsersService {
 
   async createUser(user: UserDTO) {
     if (await this._checkIsUserExist(user)) {
-      return new BadRequestException({ message: "such user is exist" });
+      throw new BadRequestException({ message: "such user is exist" });
     }
     user.password = await this._hashUserPassword(user.password);
     const userPrepared = this.usersRepository.create(user);

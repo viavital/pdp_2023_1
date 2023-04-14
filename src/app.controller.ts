@@ -3,11 +3,12 @@ import { Controller, Inject, Post, Req, UseGuards } from "@nestjs/common";
 import { LocalAuthGuard } from "./auth/local-auth.guard";
 import { AuthService } from "./auth/auth.service";
 import { Public } from "./auth/global-guard-policy";
-import { UsersContentService } from "./mail-sender/users-content-service";
+import { UsersContentService } from "./mail-sender/users-content/users-content-service";
 
 @Controller()
 export class AppController {
-  constructor(private readonly authService: AuthService,@Inject("UsersContentService") private readonly userContentService: UsersContentService ) {
+  constructor(private readonly authService: AuthService,
+              @Inject("IContentService") private readonly userContentService: UsersContentService ) {
   }
 
   @Public()
